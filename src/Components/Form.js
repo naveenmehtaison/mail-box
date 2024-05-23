@@ -22,21 +22,22 @@ const Login =()=>{
                 password: obj.Password,
                 returnSecureToken: true 
             })
+            
             toast.success('loggedin suceesfully')
-            // const arr = obj.Email.split("")
-            // console.log(response.data.idToken)
-            // localStorage.setItem('token',response.data.idToken)
+            const arr = obj.Email.split("")
+            console.log(response.data.idToken)
+            localStorage.setItem('token',response.data.idToken)
             // Dispatch(StoreActions2.login())
             // Dispatch(StoreActions2.istoken())
             
 
-            // const fil_arr = arr.filter((ele,item)=>(
-            //     ele!= '@' && ele!='.'
-            // ))
-            // const fin_email = fil_arr.join('')
-            // console.log(fin_email)
-            // console.log(fin_email)
-            // localStorage.setItem('email',fin_email)
+            const fil_arr = arr.filter((ele,item)=>(
+                ele!= '@' && ele!='.'
+            ))
+            const fin_email = fil_arr.join('')
+            console.log(fin_email)
+            console.log(fin_email)
+            localStorage.setItem('email',fin_email)
             // Dispatch(userid(fin_email))
             // console.log(email,isauth)
             // console.log(fin_email)

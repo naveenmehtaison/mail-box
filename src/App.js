@@ -3,8 +3,9 @@ import './App.css';
 import Header from './Components/Header';
 import Form from './Components/Form'
 import { ToastContainer, toast } from 'react-toastify';
-
+import { BrowserRouter } from 'react-router-dom';
 import MyRoutes from './MyRoutes/MyRoutes';
+import Dashboard from './Components/Pages/Dashboard';
 // const MyRoutes=()=>{
 //     return(
 //         <>
@@ -20,10 +21,12 @@ function App() {
   return (
     <div >
       <Header></Header>
-      <MyRoutes>
-        <Header/>
-        <Form/>
-      </MyRoutes>
+
+
+          <MyRoutes>
+            <Header/>
+            <Form/>
+          </MyRoutes>
       <ToastContainer />
     </div>
   );

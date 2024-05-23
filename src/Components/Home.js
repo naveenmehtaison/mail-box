@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useRef, useState } from "react";
+import { toast } from "react-toastify";
 {/* <Editor
   editorState={editorState}
   toolbarClassName="toolbarClassName"
@@ -19,6 +20,12 @@ const Home = () => {
         
         e.preventDefault()
         const obj = {email:receiver.current.value,subject:subject.current.value,msg:content.blocks[0].text}
+        const arr = obj.email.split("")
+        const fil_arr = arr.filter((ele,item)=>(
+            ele!= '@' && ele!='.'
+        ))
+        const fin_email = localStorage.getItem('email')
+        console.log(fin_email)
         const options={
             method:'POST',
             headers:{
@@ -27,8 +34,8 @@ const Home = () => {
             body:JSON.stringify(obj),
         }
         try{
-            const res = fetch('https://authentication-1f2ad-default-rtdb.firebaseio.com/email.json',options)
-            console.log('done')
+            const res = fetch(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}.json`,options)
+            toast.success('emailsent')
         }
         catch(err){
             alert(err)
@@ -36,6 +43,7 @@ const Home = () => {
         }
 
     }
+    console.log(content)
   return (
     <>
     <Card style={{ width: '100%', height: '700px' , boxShadow:'LG'}}>
@@ -48,8 +56,9 @@ const Home = () => {
         <Editor 
          ref={editor}
          value={content}
-         onChange={newContent=>setcontent(newContent)}/>
+         onChange={newContent=>{setcontent(newContent)}}/>
       </Card.Body>
+      
     </Card>
     <Button onClick={hanldesentbutton}>Sent</Button>
     </>
