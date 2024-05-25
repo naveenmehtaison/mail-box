@@ -29,6 +29,7 @@ const Inbox=()=>{
         }
     }
     const GetData=async()=>{
+        console.log('hello')
         const res = await axios.get(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}.json`)
         console.log(res.data)
         const Arraydata = Object.entries(res?.data ?? {}).map(([key, value]) => {
@@ -46,12 +47,15 @@ const Inbox=()=>{
         // });
         // console.log(dataArray2)
     }
+    setTimeout(()=>{
+        GetData()
+    },2000)
 
     useEffect(()=>{
 
         GetData()
 
-    },[])
+    },[2000])
     const Deletehandler=async(ele)=>{
         try{
             const res = axios.delete(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}/${ele.id}.json`)
