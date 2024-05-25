@@ -10,12 +10,13 @@ const Header = () => {
             <Card.Header >
                 <Navbar>
                     <Navbar.Brand className='fs-2 text-primary' >My Wbelink</Navbar.Brand>
+                    <Navbar.Brand href='/dashboard'>Dashboard</Navbar.Brand>
                     <Navbar.Brand href='/home'>Home</Navbar.Brand>
                     <Navbar.Brand>Product</Navbar.Brand>
                     <Navbar.Brand  href='/sent'>Sent
                     </Navbar.Brand>
                     {/* <Navbar.Brand href='/home'>Container</Navbar.Brand> */}
-                    <Navbar.Brand href='/dashboard'>Container</Navbar.Brand>
+                    
 
                 </Navbar>
 

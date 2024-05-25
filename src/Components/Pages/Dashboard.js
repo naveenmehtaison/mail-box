@@ -24,9 +24,10 @@ const Dashboard = ()=>{
     const GetData=async()=>{
       const res = await axios.get(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}.json`)
       console.log(res.data)
-      const Arraydata = Object.entries(res.data).map(([key,value])=>{
-          return({id:key,...value})
-      })
+      const Arraydata = Object.entries(res?.data ?? {}).map(([key, value]) => {
+        return { id: key, ...value };
+      });
+    
       Dispatch(StoreActions.setunreadmsg(Arraydata))
       Dispatch(StoreActions.getcounter())
       console.log(Arraydata,'arraydata')

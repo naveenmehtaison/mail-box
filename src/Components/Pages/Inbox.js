@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect,useState } from "react"
 import FullMail from "./FullMail"
-import { Card } from "react-bootstrap"
+import { Button, Card } from "react-bootstrap"
 import Shimmer from "../Shimmer"
 import { useDispatch,useSelector } from "react-redux"
 import { StoreActions } from "../../Store/ReduxcreateSlice"
@@ -16,7 +16,7 @@ const Inbox=()=>{
         setfullmail(ele)
         setshowmail(!showmail)
         Dispatch(StoreActions.setshowtick(ele))
-        Dispatch(StoreActions.getcounter)
+        Dispatch(StoreActions.getcounter())
         // ele.emoji=true
         console.log(ele,fin_email)
         let { id, ...objWithoutId } = ele;
@@ -28,29 +28,42 @@ const Inbox=()=>{
             console.log(err)
         }
     }
-    // const GetData=async()=>{
-    //     const res = await axios.get(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}.json`)
-    //     console.log(res.data)
-    //     const Arraydata = Object.entries(res.data).map(([key,value])=>{
-    //         return({id:key,...value})
-    //     })
-    //     setinboxdata(Arraydata)
-    //     Dispatch(StoreActions.setunreadmsg(Arraydata))
-    //     Dispatch(StoreActions.getcounter())
-    //     console.log(Arraydata,'arraydata')
+    const GetData=async()=>{
+        const res = await axios.get(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}.json`)
+        console.log(res.data)
+        const Arraydata = Object.entries(res?.data ?? {}).map(([key, value]) => {
+            return { id: key, ...value };
+        });
         
-    //     // const dataArray2 = Object.entries(dataArray).map(([key, value]) => {
+        setinboxdata(Arraydata)
+        Dispatch(StoreActions.setunreadmsg(Arraydata))
+        Dispatch(StoreActions.getcounter())
+        console.log(Arraydata,'arraydata')
+        
+        // const dataArray2 = Object.entries(dataArray).map(([key, value]) => {
                 
-    //     //     return { id:key, ...value };
-    //     // });
-    //     // console.log(dataArray2)
-    // }
+        //     return { id:key, ...value };
+        // });
+        // console.log(dataArray2)
+    }
 
-    // useEffect(()=>{
+    useEffect(()=>{
 
-    //     GetData()
+        GetData()
 
-    // },[])
+    },[])
+    const Deletehandler=async(ele)=>{
+        try{
+            const res = axios.delete(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}/${ele.id}.json`)
+        }
+        catch(err){
+            console.log(err)
+        }
+        Dispatch(StoreActions.deletehandler(ele))
+        Dispatch(StoreActions.getcounter())
+
+
+    }
     const selector = useSelector((state)=>state.email.unreadmsg)
     console.log(selector)
     if(selector.length==0){
@@ -59,13 +72,19 @@ const Inbox=()=>{
     return(
         <>
             {selector.map((ele,item)=>(
-            <Card className='cursor-pointer' onClick={()=>{Handlemail(ele)}}>
-
-               <p></p> <p>{ele.emoji==undefined && '🔵'} {ele.email}--- {ele.subject} </p>
-
+                <div className="relative">
+                    <div className="flex justify-self-auto w-full">
+                        <Card className='cursor-pointer w-full' onClick={()=>{Handlemail(ele)}}>
+                            <p className="w-100%">{ele.emoji == undefined && '🔵'} {ele.email} --- {ele.subject}</p>
+                        </Card>
+                    </div>
+                    <Button className="absolute top-0 right-0" onClick={()=>{Deletehandler(ele)}}>Delete</Button>
+                    {/* { showmail && <FullMail props={ele}/>} */}
+                </div>
                 
-            </Card>
+
             ))}
+            
 
         { showmail && <FullMail props={fullmail}/>}
         </>

@@ -29,6 +29,13 @@ const reduxSlice = createSlice({
            console.log(filter.length)
             state.counter= filter.length
 
+        },
+        deletehandler(state,action){
+            const filter = state.unreadmsg.filter((ele,item)=>(
+                ele.id!=action.payload.id
+
+            ))
+            state.unreadmsg=filter
         }
 
 
