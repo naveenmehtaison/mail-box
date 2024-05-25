@@ -1,11 +1,13 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-
+import { geturl } from "../../Utilities/apidata"
 import FullMail from "./FullMail"
 import Shimmer from "../Shimmer"
 import { Button, Card } from "react-bootstrap"
+import useData from "../useData"
 
 const Sent =()=>{
+    const data = useData()
     const [sentmail,setsentmail] = useState([])
     const mail = localStorage.getItem('email')
     const [fullmail,setfullmail]= useState([])
@@ -16,8 +18,10 @@ const Sent =()=>{
         setshowmail(!showmail)
         
     }
+    
+    console.log(data)
     const GetData=async ()=>{
-        const res = await axios.get(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/.json`)
+        const res = await axios.get(geturl+`/.json`)
         const dataArray = Object.entries(res.data).map(([key, value]) => {
             let a = {...value}
             console.log('a',a)
@@ -32,30 +36,31 @@ const Sent =()=>{
         console.log(dataArray)
         const j = dataArray[0]
         console.log(j[1])
-        // const dataArray2 = Object.entries(dataArray).map(([key, value]) => {
-                
-        //     return { id:key, ...value };
-        // });
-        // console.log(dataArray2)
+
         console.log(res.data)
         setsentmail(dataArray)
     }
     useEffect(()=>{
         GetData()
+        // const j = useData()
+        // console.log(j)
+        // setsentmail(data)
+        // console.log(sentmail,data)
     },[])
-    console.log(sentmail)
+
     if(sentmail.length==0){
+        console.log(sentmail)
         return(   <Shimmer/> 
 
             )
     }
-    console.log(sentmail[0][0])
+    console.log(sentmail)
     const Deletehandler=async(ele)=>{
         console.log(ele
 
         )
         try{
-            const res = axios.delete(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${ele.id}.json`)
+            const res = axios.delete(geturl + `${ele.id}.json`)
         }
         catch(err){
             console.log(err)
@@ -69,9 +74,11 @@ const Sent =()=>{
 
 
     }
+    console.log(sentmail)
     return(
         <>
         {sentmail.map((ele,item)=>(
+            
             
                 <div className="relative">
                     <div className="flex justify-self-auto w-full">
@@ -85,6 +92,7 @@ const Sent =()=>{
                 
             
         ))}
+            <p>Hello</p>
         { showmail && <FullMail props={fullmail}/>}
         </>
 

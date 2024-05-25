@@ -5,7 +5,9 @@ import { Button, Card } from "react-bootstrap"
 import Shimmer from "../Shimmer"
 import { useDispatch,useSelector } from "react-redux"
 import { StoreActions } from "../../Store/ReduxcreateSlice"
+import { geturl } from "../../Utilities/apidata"
 const Inbox=()=>{
+    console.log(geturl)
     const Dispatch = useDispatch()
     const [inboxdata,setinboxdata]= useState([])
     const fin_email = localStorage.getItem('email')
@@ -22,15 +24,15 @@ const Inbox=()=>{
         let { id, ...objWithoutId } = ele;
         let j = {emoji:false}
         try{
-        const res = await axios.patch(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}/${ele.id}.json`,{...objWithoutId})
+        const res = await axios.patch( geturl + `${fin_email}/${ele.id}.json`,{...objWithoutId})
         }
         catch(err){
             console.log(err)
         }
     }
     const GetData=async()=>{
-        console.log('hello')
-        const res = await axios.get(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}.json`)
+        console.log('hello', geturl + `${fin_email}.json`)
+        const res = await axios.get(geturl + `${fin_email}.json`)
         console.log(res.data)
         const Arraydata = Object.entries(res?.data ?? {}).map(([key, value]) => {
             return { id: key, ...value };
@@ -61,7 +63,7 @@ const Inbox=()=>{
     }, []);
     const Deletehandler=async(ele)=>{
         try{
-            const res = axios.delete(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}/${ele.id}.json`)
+            const res = axios.delete(geturl+`${fin_email}/${ele.id}.json`)
         }
         catch(err){
             console.log(err)
