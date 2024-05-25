@@ -75,7 +75,7 @@ const Sent =()=>{
             
                 <div className="relative">
                     <div className="flex justify-self-auto w-full">
-                        <Card className='cursor-pointer' onClick={()=>{handlemail(ele[0])}}>
+                        <Card className='cursor-pointer w-full' onClick={()=>{handlemail(ele[0])}}>
                             <p className="w-100%">{ele[0].email}--- {ele[0].subject}</p>
                         </Card>
                     </div>

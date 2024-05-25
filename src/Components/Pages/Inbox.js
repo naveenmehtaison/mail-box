@@ -47,15 +47,18 @@ const Inbox=()=>{
         // });
         // console.log(dataArray2)
     }
-    setTimeout(()=>{
-        GetData()
-    },2000)
+    // setTimeout(()=>{
+    //     GetData()
+    // },2000)
 
-    useEffect(()=>{
+    useEffect(() => {
+        const interval = setInterval(() => {
+            GetData();
+        }, 2000);
 
-        GetData()
-
-    },[2000])
+        // Clean up the interval if the component unmounts
+        return () => clearInterval(interval);
+    }, []);
     const Deletehandler=async(ele)=>{
         try{
             const res = axios.delete(`https://authentication-1f2ad-default-rtdb.firebaseio.com/sent/${fin_email}/${ele.id}.json`)
