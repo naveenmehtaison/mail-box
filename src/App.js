@@ -17,6 +17,7 @@ import Dashboard from './Components/Pages/Dashboard';
 
 // }
 // export default MyRoutes
+
 function App() {
   return (
     <div >
@@ -24,8 +25,9 @@ function App() {
 
 
           <MyRoutes>
-            <Header/>
-            <Form/>
+
+            <Dashboard/>
+
           </MyRoutes>
       <ToastContainer />
     </div>

@@ -24,7 +24,7 @@ const Home = () => {
         const fil_arr = arr.filter((ele,item)=>(
             ele!= '@' && ele!='.'
         ))
-        const fin_email = localStorage.getItem('email')
+        const fin_email = fil_arr.join('')
         console.log(fin_email)
         const options={
             method:'POST',
