@@ -21,12 +21,15 @@ import Dashboard from './Components/Pages/Dashboard';
 function App() {
   return (
     <div >
-      <Header></Header>
-
-
+      
+        {/* <Header></Header> */}
+        
           <MyRoutes>
+          
+           
 
-            <Dashboard/>
+            {/* <Dashboard/> */}
+            
 
           </MyRoutes>
       <ToastContainer />

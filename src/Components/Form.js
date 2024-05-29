@@ -6,7 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { StoreActions } from "../Store/ReduxcreateSlice";
 const Login =()=>{
+    const Dispatch = useDispatch()
     const [signup,setsignup]= useState(false)
     const navigate=useNavigate()
     const signupfunc=()=>{
@@ -42,6 +45,7 @@ const Login =()=>{
             // console.log(email,isauth)
             // console.log(fin_email)
             // toastify()
+            Dispatch(StoreActions.setlogin())
             navigate('/home')
 
         }

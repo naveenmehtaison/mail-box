@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initalizeobj = {islogin:false,unreadmsg:[],showtick:true,counter:0}
+const initalizeobj = {islogin:'',unreadmsg:[],showtick:true,counter:0,unreadmsg2:[]}
 const reduxSlice = createSlice({
     name:'Mailbox',
     initialState:initalizeobj,
@@ -27,6 +27,7 @@ const reduxSlice = createSlice({
                 ele.emoji==undefined
             )
            console.log(filter.length)
+           state.unreadmsg2 = filter
             state.counter= filter.length
 
         },
